@@ -1,0 +1,341 @@
+{
+  "name": "G",
+  "directed": true,
+  "strict": false,
+  "rankdir": "RL",
+  "_subgraph_cnt": 0,
+  "objects": [
+    {
+      "_gvid": 0,
+      "name": "data.archive_file.lambda",
+      "fontname": "sans-serif",
+      "label": "data.archive_file.lambda",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 1,
+      "name": "data.aws_iam_policy_document.assume_role",
+      "fontname": "sans-serif",
+      "label": "data.aws_iam_policy_document.assume_role",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 2,
+      "name": "aws_default_vpc.vpc",
+      "fontname": "sans-serif",
+      "label": "aws_default_vpc.vpc",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 3,
+      "name": "aws_eks_cluster.eks_cluster",
+      "fontname": "sans-serif",
+      "label": "aws_eks_cluster.eks_cluster",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 4,
+      "name": "aws_iam_role.iam_for_lambda",
+      "fontname": "sans-serif",
+      "label": "aws_iam_role.iam_for_lambda",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 5,
+      "name": "aws_instance.web",
+      "fontname": "sans-serif",
+      "label": "aws_instance.web",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 6,
+      "name": "aws_instance.web2",
+      "fontname": "sans-serif",
+      "label": "aws_instance.web2",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 7,
+      "name": "aws_instance.web3",
+      "fontname": "sans-serif",
+      "label": "aws_instance.web3",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 8,
+      "name": "aws_kinesis_stream.kinesis_stream",
+      "fontname": "sans-serif",
+      "label": "aws_kinesis_stream.kinesis_stream",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 9,
+      "name": "aws_lambda_function.lambda_function",
+      "fontname": "sans-serif",
+      "label": "aws_lambda_function.lambda_function",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 10,
+      "name": "aws_lambda_function.lambda_function2",
+      "fontname": "sans-serif",
+      "label": "aws_lambda_function.lambda_function2",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 11,
+      "name": "aws_lambda_function.lambda_function3",
+      "fontname": "sans-serif",
+      "label": "aws_lambda_function.lambda_function3",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 12,
+      "name": "aws_lambda_function.lambda_function4",
+      "fontname": "sans-serif",
+      "label": "aws_lambda_function.lambda_function4",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 13,
+      "name": "aws_nat_gateway.nat_gw",
+      "fontname": "sans-serif",
+      "label": "aws_nat_gateway.nat_gw",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 14,
+      "name": "aws_nat_gateway.nat_gw2",
+      "fontname": "sans-serif",
+      "label": "aws_nat_gateway.nat_gw2",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 15,
+      "name": "aws_network_interface.nic",
+      "fontname": "sans-serif",
+      "label": "aws_network_interface.nic",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 16,
+      "name": "aws_redshift_cluster.redshift_cluster",
+      "fontname": "sans-serif",
+      "label": "aws_redshift_cluster.redshift_cluster",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 17,
+      "name": "aws_s3_bucket.s3_bucket",
+      "fontname": "sans-serif",
+      "label": "aws_s3_bucket.s3_bucket",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 18,
+      "name": "aws_s3_bucket.s3_bucket2",
+      "fontname": "sans-serif",
+      "label": "aws_s3_bucket.s3_bucket2",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 19,
+      "name": "aws_s3_bucket.s3_bucket3",
+      "fontname": "sans-serif",
+      "label": "aws_s3_bucket.s3_bucket3",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 20,
+      "name": "aws_s3_bucket.s3_bucket4",
+      "fontname": "sans-serif",
+      "label": "aws_s3_bucket.s3_bucket4",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 21,
+      "name": "aws_subnet.data_analytics",
+      "fontname": "sans-serif",
+      "label": "aws_subnet.data_analytics",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 22,
+      "name": "aws_subnet.snet",
+      "fontname": "sans-serif",
+      "label": "aws_subnet.snet",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 23,
+      "name": "aws_subnet.web_application",
+      "fontname": "sans-serif",
+      "label": "aws_subnet.web_application",
+      "shape": "rect"
+    },
+    {
+      "_gvid": 24,
+      "name": "aws_vpc.vpc",
+      "fontname": "sans-serif",
+      "label": "aws_vpc.vpc",
+      "shape": "rect"
+    }
+  ],
+  "edges": [
+    {
+      "_gvid": 0,
+      "tail": 3,
+      "head": 16
+    },
+    {
+      "_gvid": 1,
+      "tail": 3,
+      "head": 22
+    },
+    {
+      "_gvid": 2,
+      "tail": 4,
+      "head": 1
+    },
+    {
+      "_gvid": 3,
+      "tail": 5,
+      "head": 23
+    },
+    {
+      "_gvid": 4,
+      "tail": 6,
+      "head": 23
+    },
+    {
+      "_gvid": 5,
+      "tail": 7,
+      "head": 23
+    },
+    {
+      "_gvid": 6,
+      "tail": 9,
+      "head": 3
+    },
+    {
+      "_gvid": 7,
+      "tail": 9,
+      "head": 4
+    },
+    {
+      "_gvid": 8,
+      "tail": 10,
+      "head": 4
+    },
+    {
+      "_gvid": 9,
+      "tail": 10,
+      "head": 13
+    },
+    {
+      "_gvid": 10,
+      "tail": 11,
+      "head": 4
+    },
+    {
+      "_gvid": 11,
+      "tail": 11,
+      "head": 13
+    },
+    {
+      "_gvid": 12,
+      "tail": 12,
+      "head": 4
+    },
+    {
+      "_gvid": 13,
+      "tail": 12,
+      "head": 13
+    },
+    {
+      "_gvid": 14,
+      "tail": 13,
+      "head": 8
+    },
+    {
+      "_gvid": 15,
+      "tail": 13,
+      "head": 21
+    },
+    {
+      "_gvid": 16,
+      "tail": 14,
+      "head": 5
+    },
+    {
+      "_gvid": 17,
+      "tail": 14,
+      "head": 6
+    },
+    {
+      "_gvid": 18,
+      "tail": 14,
+      "head": 7
+    },
+    {
+      "_gvid": 19,
+      "tail": 14,
+      "head": 8
+    },
+    {
+      "_gvid": 20,
+      "tail": 15,
+      "head": 10
+    },
+    {
+      "_gvid": 21,
+      "tail": 15,
+      "head": 11
+    },
+    {
+      "_gvid": 22,
+      "tail": 15,
+      "head": 12
+    },
+    {
+      "_gvid": 23,
+      "tail": 17,
+      "head": 20
+    },
+    {
+      "_gvid": 24,
+      "tail": 18,
+      "head": 20
+    },
+    {
+      "_gvid": 25,
+      "tail": 19,
+      "head": 9
+    },
+    {
+      "_gvid": 26,
+      "tail": 20,
+      "head": 15
+    },
+    {
+      "_gvid": 27,
+      "tail": 20,
+      "head": 19
+    },
+    {
+      "_gvid": 28,
+      "tail": 21,
+      "head": 24
+    },
+    {
+      "_gvid": 29,
+      "tail": 22,
+      "head": 24
+    },
+    {
+      "_gvid": 30,
+      "tail": 23,
+      "head": 24
+    }
+  ]
+}
