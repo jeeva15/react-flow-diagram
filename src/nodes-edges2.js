@@ -1,4 +1,4 @@
-import myData from "./json/graph2.json";
+import myData from "./json/graph.json";
 import { MarkerType } from "reactflow";
 
 const newNodes = [];

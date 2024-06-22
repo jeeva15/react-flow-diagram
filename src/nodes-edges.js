@@ -82,23 +82,18 @@ myData.objects.forEach((data) => {
       data: { label: nodeLabel[1], type: "vpc" },
       style: {
         width: subnetArr.length * 300 + subnetArr.length * 40,
-        height: 560, // Todo: dynamically assign based on no.of subnets
+        height: 580, // Todo: dynamically assign based on no.of subnets
         border: "1px solid #8E44AD",
         justifyContent: "right",
         display: "flex",
         borderRadius: "5px",
         textAlign: "center",
       },
-      //position: { x: 200, y: 0 }, // Todo: dynamically assign based on no.of vpc and subnets
-      position,
-      nodeType: "vpc",
+      position: { x: 10, y: 120 }, // Todo: dynamically assign based on no.of vpc and subnets
+      //position,
+      nodeType: "group",
     });
   } else if (subnetArr.includes(data._gvid)) {
-    console.log(
-      "==>" + subnetCount,
-      spaceBwSubnets,
-      subnetCount * 300 + spaceBwSubnets
-    );
     newNodes.push({
       id: "id_" + data._gvid,
       data: { label: nodeLabel[1] },
@@ -114,10 +109,10 @@ myData.objects.forEach((data) => {
         display: "flex",
         borderRadius: "5px",
       },
-      //position: { x: subnetCount * 300 + spaceBwSubnets, y: 60 },
-      position,
+      position: { x: subnetCount * 300 + spaceBwSubnets, y: 60 },
+
       parentNode: "id_" + 24, //todo: dynamically assign this
-      nodeType: "subnet",
+      nodeType: "group",
     });
     nodeInSubnetCount[data._gvid] = 0;
 
@@ -134,6 +129,16 @@ myData.objects.forEach((data) => {
     const spaceBwNodes = nodeInSubnetCount[parentSubnetId] ? 50 : 50;
 
     if (parentSubnetId) {
+      const positionSwitch =
+        nodeInSubnetCount[parentSubnetId] > 2
+          ? {
+              x: 100,
+              y: nodeInSubnetCount[parentSubnetId] * 90 + spaceBwNodes,
+            }
+          : {
+              x: nodeInSubnetCount[parentSubnetId] * 90 + spaceBwNodes,
+              y: 100,
+            };
       newNodes.push({
         id: "id_" + data._gvid,
         data: { label: nodeLabel[1] },
@@ -143,11 +148,8 @@ myData.objects.forEach((data) => {
         extent: "parent",
         className: "light",
         // asssigning positions for subnet nodes
-        // position: {
-        //   x: 100,
-        //   y: nodeInSubnetCount[parentSubnetId] * 90 + spaceBwNodes,
-        // },
-        position,
+        position: positionSwitch,
+        // position,
       });
 
       // Assuming all the subnets are already assigned by now
@@ -168,25 +170,29 @@ myData.objects.forEach((data) => {
           parentId: "id_" + vpcParent,
           type: "customNode",
           data: { label: nodeLabel[1], type: nodeLabel[0] },
-          // position: {
-          //   x: elmInVPC * (720 / 2) + 60,
-          //   y: 500,
-          // },
-          position,
+          position: {
+            x: elmInVPC * (720 / 2) + 60,
+            y: 500,
+          },
+          // position,
+          nodeType: "external",
         });
         elmInVPC++;
       } else {
+        const spaceBwNodesOutVPC = elmOutVPC > 0 ? (elmOutVPC + 1) * 100 : 150;
+
         // elements outside VPC
         newNodes.push({
           id: "id_" + data._gvid,
           data: { label: nodeLabel[1] },
           type: "customNode",
           data: { label: nodeLabel[1], type: nodeLabel[0] },
-          // position: {
-          //   x: 10,
-          //   y: elmOutVPC * 120,
-          // },
-          position,
+          position: {
+            x: elmOutVPC * 120 + spaceBwNodesOutVPC,
+            y: 10,
+          },
+          // position,
+          nodeType: "external",
         });
         elmOutVPC++;
       }
@@ -196,8 +202,6 @@ myData.objects.forEach((data) => {
   totalElm++;
 });
 
-console.log("== in subnetCount" + subnetCount);
-
 const newEdges = [];
 let i = 1;
 myData.edges.forEach((data) => {
@@ -205,19 +209,20 @@ myData.edges.forEach((data) => {
     id: "ec-" + i,
     source: "id_" + data.head,
     target: "id_" + data.tail,
-    animated: false,
+    animated: true,
     sourceHandle: "a",
-    type: "smoothstep",
+    //type: "smoothstep",
     markerEnd: {
       type: MarkerType.ArrowClosed,
+      color: "#FF0072",
     },
-    style: { stroke: "#FF1493" },
+    style: { stroke: "#FF0072" },
   });
 
   i++;
 });
 
-// console.log(newNodes);
+console.log(newNodes);
 
 export const initialNodes = newNodes;
 

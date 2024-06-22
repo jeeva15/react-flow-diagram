@@ -53,12 +53,12 @@ const CustomNode = ({ data }) => {
         </div>
         <Handle
           type="source"
-          position={Position.Top}
+          position={Position.Bottom}
           style={{ background: "#fff" }}
         />
         <Handle
           type="target"
-          position={Position.Bottom}
+          position={Position.Top}
           style={{ background: "#fff" }}
         />
       </div>

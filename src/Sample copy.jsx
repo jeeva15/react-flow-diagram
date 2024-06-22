@@ -8,7 +8,7 @@ import ReactFlow, {
   Background,
   useReactFlow,
 } from "reactflow";
-import FunctionIcon from "./VPCIcon";
+import ELK from "elkjs/lib/elk.bundled.js";
 
 import dagre from "dagre";
 
@@ -26,26 +26,7 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 172;
 const nodeHeight = 36;
 
-const getNewNodePosition = (connectedNode) => {
-  // Calculate a new position (e.g., right to the connected node)
-  return {
-    x: connectedNode.position.x + 200,
-    y: connectedNode.position.y,
-  };
-};
-
-const addNodesWithPositions = (nodes) => {
-  const newNodes = nodes.map((node, index) => {
-    if (index === 0 || node.type !== "external") {
-      return node;
-    }
-
-    const connectedNode = nodes[index - 1];
-    const newNodePosition = getNewNodePosition(connectedNode);
-    return { ...node, position: newNodePosition };
-  });
-  return newNodes;
-};
+const elk = new ELK();
 
 const getLayoutedElements = (nodes, edges, direction = "LR") => {
   const isHorizontal = direction === "LR";
@@ -94,16 +75,51 @@ const getLayoutedElements = (nodes, edges, direction = "LR") => {
   return { nodes, edges };
 };
 
-const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-  initialNodes,
-  initialEdges
-);
+const useLayoutedElements = () => {
+  const { getNodes, setNodes, getEdges, fitView } = useReactFlow();
+  const defaultOptions = {
+    "elk.algorithm": "layered",
+    "elk.layered.spacing.nodeNodeBetweenLayers": 100,
+    "elk.spacing.nodeNode": 80,
+  };
+
+  const getLayoutedElements = useCallback((options) => {
+    const layoutOptions = { ...defaultOptions, ...options };
+    const graph = {
+      id: "root",
+      layoutOptions: layoutOptions,
+      children: getNodes(),
+      edges: getEdges(),
+    };
+
+    elk.layout(graph).then(({ children }) => {
+      // By mutating the children in-place we saves ourselves from creating a
+      // needless copy of the nodes array.
+      children.forEach((node) => {
+        if (node.nodeType !== "group") {
+          node.position = { x: node.x, y: node.y };
+        }
+      });
+
+      setNodes(children);
+      window.requestAnimationFrame(() => {
+        fitView();
+      });
+    });
+  }, []);
+
+  return { getLayoutedElements };
+};
+
+// const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+//   initialNodes,
+//   initialEdges
+// );
 
 const LayoutFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(() =>
-    addNodesWithPositions(layoutedNodes)
-  );
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
+  const { getLayoutedElements } = useLayoutedElements();
 
   const onConnect = useCallback(
     (params) =>
@@ -126,31 +142,6 @@ const LayoutFlow = () => {
     [nodes, edges]
   );
 
-  const { getNodes, getEdges } = useReactFlow();
-  const isValidConnection = useCallback(
-    (connection) => {
-      // we are using getNodes and getEdges helpers here
-      // to make sure we create isValidConnection function only once
-      const nodes = getNodes();
-      const edges = getEdges();
-      const target = nodes.find((node) => node.id === connection.target);
-      const hasCycle = (node, visited = new Set()) => {
-        if (visited.has(node.id)) return false;
-
-        visited.add(node.id);
-
-        for (const outgoer of getOutgoers(node, nodes, edges)) {
-          if (outgoer.id === connection.source) return true;
-          if (hasCycle(outgoer, visited)) return true;
-        }
-      };
-
-      if (target.id === connection.source) return false;
-      return !hasCycle(target);
-    },
-    [getNodes, getEdges]
-  );
-
   return (
     <div style={{ height: 1000, width: 1000 }}>
       <ReactFlow
@@ -162,12 +153,29 @@ const LayoutFlow = () => {
         nodeTypes={nodeTypes}
         fitView
         className="react-flow-subflows-example"
-        isValidConnection={isValidConnection}
       >
         <Background />
         <Panel position="top-right">
-          <button onClick={() => onLayout("TB")}>vertical layout</button>
-          <button onClick={() => onLayout("LR")}>horizontal layout</button>
+          <button
+            onClick={() =>
+              getLayoutedElements({
+                "elk.algorithm": "layered",
+                "elk.direction": "DOWN",
+              })
+            }
+          >
+            vertical layout
+          </button>
+          <button
+            onClick={() =>
+              getLayoutedElements({
+                "elk.algorithm": "layered",
+                "elk.direction": "RIGHT",
+              })
+            }
+          >
+            horizontal layout
+          </button>
         </Panel>
       </ReactFlow>
     </div>
